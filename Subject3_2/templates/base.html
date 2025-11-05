@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        nav { background: #eee; padding: 10px; margin-bottom: 20px; }
+        nav a { margin-right: 15px; text-decoration: none; color: #333; }
+        .container { max-width: 800px; margin: auto; }
+        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        form input, form textarea { width: 95%; padding: 8px; margin-bottom: 10px; }
+    </style>
+    <title>{{ title or "우리팀 소개" }}</title>
+</head>
+<body>
+    <nav>
+        <a href="/">🏠 홈 (팀원 목록)</a>
+        <a href="/input">➕ 팀원 추가</a>
+        <a href="/contact">📞 연락하기</a>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>
