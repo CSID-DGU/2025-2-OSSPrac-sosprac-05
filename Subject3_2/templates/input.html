@@ -1,1 +1,19 @@
+{% extends "base.html" %}
 
+{% block content %}
+    <h1>➕ 새 팀원 추가하기</h1>
+    <p>새로운 팀원의 정보를 입력해주세요.</p>
+
+    <form action="/input" method="POST">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="role">역할:</label>
+        <input type="text" id="role" name="role" required>
+        
+        <label for="motto">좌우명:</label>
+        <input type="text" id="motto" name="motto">
+        
+        <button type="submit">추가하기</button>
+    </form>
+{% endblock %}
