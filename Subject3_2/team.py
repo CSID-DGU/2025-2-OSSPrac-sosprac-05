@@ -1,81 +1,101 @@
-# team.py
+from flask import Flask, request, render_template, url_for, redirect
+import json
+import os
 
-from flask import Flask, render_template, request
-
-# Flask 앱 생성합니다.
 app = Flask(__name__)
 
-# 팀원 데이터
-team_members = [
-    {'name': '팀원1', 'role': 'AI 엔지니어', 'motto': '세상을 바꾸는 코드'},
-    {'name': '팀원2', 'role': '프로젝트 매니저', 'motto': '일정은 생명이다'},
-    {'name': '팀원3', 'role': '백엔드 개발자', 'motto': '버그 없는 세상'}
-]
+# 팀원 정보를 저장할 JSON 파일 경로
+TEAM_JSON_FILE = 'team.json'
 
-# --- 라우트(Route) 정의 ---
-# 라우트: 특정 URL로 접속했을 때 실행될 함수를 연결해줍니다.
+def load_members():
+    """team.json 파일에서 팀원 목록을 불러옵니다."""
+    if not os.path.exists(TEAM_JSON_FILE):
+        return []
+    try:
+        with open(TEAM_JSON_FILE, 'r', encoding='utf-8') as f:
+            members = json.load(f)
+            return members
+    except json.JSONDecodeError:
+        return []
 
+def save_members(members):
+    """팀원 목록을 team.json 파일에 저장합니다."""
+    with open(TEAM_JSON_FILE, 'w', encoding='utf-8') as f:
+        json.dump(members, f, ensure_ascii=False, indent=4)
+
+
+# 1. '/' (메인 페이지) 
 @app.route('/')
-def home():
-    """
-    메인 페이지 (http://.../)
-    - index.html을 렌더링(표시)합니다.
-    - 팀원 목록 데이터를 HTML로 전달합니다.
-    """
-    return render_template('index.html', members=team_members)
+def index():
+    team_members = load_members()
+    # 팀장을 항상 맨 위로 정렬
+    team_members.sort(key=lambda x: x['role'] != '팀장')
+    return render_template('index.html', teamMembers=team_members)
 
-@app.route('/input', methods=['GET', 'POST'])
+# 2. '/input' (입력 페이지) 
+@app.route('/input')
 def input_page():
-    """
-    팀원 추가 페이지 (http://.../input)
-    - GET 방식: input.html 폼을 보여줍니다.
-    - POST 방식: 폼에서 전송된 데이터를 처리합니다.
-    """
-    if request.method == 'POST':
-        # 1. 폼에서 전송된 데이터를 받습니다.
-        new_name = request.form['name']
-        new_role = request.form['role']
-        new_motto = request.form['motto']
-        
-        # 2. (임시) 받은 데이터로 새 팀원 딕셔너리를 만듭니다.
-        new_member = {'name': new_name, 'role': new_role, 'motto': new_motto}
-        team_members.append(new_member) # 실제로는 DB에 저장해야 합니다.
-        
-        # 3. result.html 페이지로 결과를 보여줍니다.
-        return render_template('result.html', 
-                               title="팀원 추가 완료", 
-                               message=f"{new_name}({new_role}) 님이 팀에 합류했습니다!")
-    
-    # GET 요청일 경우 (그냥 페이지에 접속했을 때)
     return render_template('input.html')
 
-@app.route('/contact', methods=['GET', 'POST'])
-def contact_page():
-    """
-    연락처 페이지 (http://.../contact)
-    - GET 방식: contact.html 폼을 보여줍니다.
-    - POST 방식: 폼 데이터를 처리합니다.
-    """
-    if request.method == 'POST':
-        # 1. 폼 데이터(문의 내용)를 받습니다.
-        email = request.form['email']
-        message = request.form['message']
-        
-        # 2. (임시) 받은 데이터를 서버 콘솔에 출력합니다.
-        # (실제로는 이메일을 보내거나 DB에 저장합니다)
-        print(f"--- 새 문의 접수 ---")
-        print(f"보낸 사람: {email}")
-        print(f"내용: {message}")
-        print(f"-------------------")
-        
-        # 3. result.html 페이지로 처리 완료를 알립니다.
-        return render_template('result.html',
-                               title="문의 접수 완료",
-                               message="소중한 의견 감사합니다. 곧 회신 드리겠습니다.")
-    
-    # GET 요청일 경우
-    return render_template('contact.html')
+# 3. '/result' (결과 처리) 수정
+@app.route('/result', methods=['POST'])
+def result():
+    # 폼에서 정보 가져오기 (기존과 동일)
+    names = request.form.getlist('name[]')
+    majors = request.form.getlist('major[]')
+    roles = [request.form.get(f'role_{i}') for i in range(len(names))]
+    phones = request.form.getlist('phone[]')
+    email_locals = request.form.getlist('emailLocal[]')
+    email_domains = request.form.getlist('emailDomain[]')
 
-# 이 스크립트가 메인으로 실행될 때만 웹 서버를 가동합니다.
+    # 현재 저장된 멤버 목록 불러오기
+    team_members = load_members()
+
+    # 새로 입력받은 멤버 정보 추가하기
+    for i, (name, major, role, phone, email_local, email_domain) in enumerate(
+            zip(names, majors, roles, phones, email_locals, email_domains)):
+
+        if role == '팀장':
+            profile_picture_url = url_for('static', filename='leader.png')
+        else:
+            profile_picture_url = url_for('static', filename='member.png')
+
+        member = {
+            'name': name,
+            'major': major,
+            'role': role,
+            'phone': phone,
+            'email': f"{email_local}@{email_domain}",
+            'profilePicture': profile_picture_url
+            # TODO: 필요하다면 여기에 '취미', '깃허브' 등도 추가
+        }
+        team_members.append(member) 
+
+
+    save_members(team_members)
+
+    # '새로고침' (메인 페이지로 리다이렉트)
+    return redirect(url_for('index'))
+
+
+# 4. '/contact' (비상 연락처) 
+@app.route('/contact')
+def contact():
+    # URL에서 이메일과 전화번호 정보 가져오기
+    email = request.args.get('email')
+    phone = request.args.get('phone')
+
+    # contact.html에 이메일과 전화번호 정보를 전달하여 렌더링
+    return render_template('contact.html', email=email, phone=phone)
+
+
+@app.route('/emergency')
+def emergency_contact():
+    name = "비상연락처"
+    email = "emergency@email.com"
+    phone = "010-9876-5432"
+    
+    return render_template('contact.html', name=name, email=email, phone=phone)
+
 if __name__ == '__main__':
-    app.run(debug=True) # debug=True는 개발 중 오류를 쉽게 볼 수 있게 해줍니다.
+    app.run(debug=True)

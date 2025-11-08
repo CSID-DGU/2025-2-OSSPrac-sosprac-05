@@ -1,16 +1,26 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Page</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-{% block content %}
-    <h1>📞 연락하기</h1>
-    <p>우리 팀에게 궁금한 점을 남겨주세요.</p>
-
-    <form action="/contact" method="POST">
-        <label for="email">회신받을 이메일:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="message">문의 내용:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-        
-        <button type="submit">전송하기</button>
-    </form>
-{% endblock %}
+<body class="contact-page">
+    <div class="contact-header">
+        Contact: <span id="contact-name">{{ name }}</span> 📞
+    </div>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        <tr>
+            <td><a href="mailto:{{ email }}">{{ email }}</a></td>
+            <td>{{ phone }}</td>
+        </tr>
+    </table>
+    <a href="#" onclick="window.close();" class="button">닫기</a>
+</body>
+</html>

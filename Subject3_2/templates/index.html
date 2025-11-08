@@ -1,16 +1,77 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>🎉 05-sosprac 팀을 소개합니다</h1>
-    <hr>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-sosprac 팀 소개</title>
     
-    {% for member in members %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        function openEmergencyContact() {
+            window.open("/emergency", "EmergencyContact", "width=400,height=250,scrollbars=no,toolbar=no,menubar=no");
+        }
+    </script>
+</head>
+
+<body class="index-page">
+
+    <h1>05-sosprac 팀 소개</h1>
+
+    <div class="card-container">
         <div class="card">
-            <h3>{{ member.name }}</h3>
-            <strong>역할:</strong> {{ member.role }} <br>
-            <strong>한마디:</strong> "{{ member.motto }}"
+            <img src="https://via.placeholder.com/150" alt="팀장 프로필 사진" class="profile-pic">
+            <span class="role-label leader">팀장</span>
+            <h2>팀장</h2>
+            <p class="hobby">"운동하기"</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:example@gmail.com">example@gmail.com</a></p>
+                <p><span class="icon">📞</span> 010-1234-5678</p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/username0" target="_blank">@username0</a></p>
+            </div>
         </div>
-    {% else %}
-        <p>아직 팀원이 없습니다.</p>
-    {% endfor %}
-{% endblock %}
+
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="팀원1 프로필 사진" class="profile-pic">
+            <span class="role-label member">팀원</span>
+            <h2>팀원 A</h2>
+            <p class="hobby">"독서"</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:member1@email.com">member1@email.com</a></p>
+                <p><span class="icon">📞</span> 010-0000-0001</p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/username1" target="_blank">@username1</a></p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="팀원2 프로필 사진" class="profile-pic">
+            <span class="role-label member">팀원</span>
+            <h2>팀원 B</h2>
+            <p class="hobby">""</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:member2@email.com"></a></p>
+                <p><span class="icon">📞</span> </p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/username2" target="_blank"></a></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="팀원3 프로필 사진" class="profile-pic">
+            <span class="role-label member">팀원</span>
+            <h2>팀원 C</h2>
+            <p class="hobby">""</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:member3@email.com"></a></p>
+                <p><span class="icon">📞</span> </p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/username3" target="_blank"></a></p>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="button-container">
+        <a href="/input" class="button-primary">팀원 추가하기</a>
+        <a href="#" class="button-primary" onclick="openEmergencyContact(); return false;">비상연락처</a>
+    </div>
+
+</body>
+</html>
