@@ -33,7 +33,7 @@
         </div>
 
         <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('jang') }}', '_blank')" >
-            <img src="https://via.placeholder.com/150" alt="팀원1 프로필 사진" class="profile-pic">
+            <img src="{{ url_for('static', filename='jang.jpg') }}" alt="팀원1 프로필 사진" class="profile-pic">
             <span class="role-label member">팀원</span>
             <h2>팀원 장승열</h2>
             <p class="hobby">"독서"</p>
@@ -57,7 +57,7 @@
         </div>
 
         <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('son') }}', '_blank')">
-            <img src="https://via.placeholder.com/150" alt="팀원3 프로필 사진" class="profile-pic">
+            <img src="{{ url_for('static', filename='son.jpg') }}" alt="팀원3 프로필 사진" class="profile-pic">
             <span class="role-label member">팀원</span>
             <h2>팀원 손석현</h2>
             <p class="hobby">""</p>
