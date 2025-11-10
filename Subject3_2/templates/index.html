@@ -21,7 +21,7 @@
     <div class="card-container">
         
         <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('kimjihun') }}', '_blank')" >
-            <img src="https://via.placeholder.com/150" alt="팀장 프로필 사진" class="profile-pic">
+            <img src="{{ url_for('static', filename='ji.jpg') }}" alt="팀장 프로필 사진" class="profile-pic">
             <span class="role-label leader">팀장</span>
             <h2>팀장 김지훈</h2>
             <p class="hobby">"운동하기"</p>
