@@ -1,0 +1,5 @@
+{
+    "total_visits": 1,
+    "today_date": "2025-11-12",
+    "today_visits": 1
+}
