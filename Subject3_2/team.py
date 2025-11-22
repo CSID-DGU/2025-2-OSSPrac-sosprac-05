@@ -177,4 +177,4 @@ def emergency_contact():
     return render_template('contact.html', name=name, email=email, phone=phone)
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=8000)
+    app.run(debug=True)
