@@ -5,5 +5,4 @@ services:
     build: .
     image:  ${DOCKER_USR}/prac12w
     ports:
-      - "8000:80"          
-    restart: always
+      - "8000:8000"
