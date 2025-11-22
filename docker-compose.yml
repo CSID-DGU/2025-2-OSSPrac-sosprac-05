@@ -5,5 +5,5 @@ services:
     build: .
     image:  ${DOCKER_USR}/prac12w
     ports:
-      - "8000:5000"           # 호스트(8000) <-> 컨테이너(5000, 파이썬 앱 기본 포트)
+      - "8000:80"          
     restart: always
