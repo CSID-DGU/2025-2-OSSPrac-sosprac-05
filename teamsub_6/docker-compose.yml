@@ -1,7 +1,11 @@
 
 services:
-  python-app:             
+  python-app:
     build: .
-    image: team_proj-image    
+    image: my-web-image
     ports:
-      - "8000:8000"
+      - "8000:80"
+    # 서버를 껐다 켜도 방문자 수와 추가된 팀원 정보를 날리지 않기 위한 필수 백업 장치
+    volumes:
+      - ./visits.txt:/app/visits.txt
+      - ./team.json:/app/team.json
