@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-sosprac 팀 소개</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        function openEmergencyContact() {
+            window.open("/emergency", "EmergencyContact", "width=400,height=250,scrollbars=no,toolbar=no,menubar=no");
+        }
+    </script>
+</head>
+
+<body class="index-page">
+
+    <h1>05-sosprac 팀 소개</h1>
+
+    <div class="visitor-stats">
+        <p>오늘 방문자 수: <strong>{{ todayVisits }}</strong> 명</p>
+        <p>전체 방문자 수: <strong>{{ totalVisits }}</strong> 명</p>
+    </div>
+
+    <div class="card-container">
+        
+        <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('kimjihun') }}', '_blank')" >
+            <img src="{{ url_for('static', filename='ji.jpg') }}" alt="팀장 프로필 사진" class="profile-pic">
+            <span class="role-label leader">팀장</span>
+            <h2>팀장 김지훈</h2>
+            <p class="hobby">"영화보기"</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:zihun3069@dgu.ac.kr">zihun3069@dgu.ac.kr</a></p>
+                <p><span class="icon">📞</span> 010-8654-3069</p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/jihun-3069" target="_blank">@jihun-3069</a></p>
+            </div>
+        </div>
+
+        <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('jang') }}', '_blank')" >
+            <img src="{{ url_for('static', filename='jang.jpg') }}" alt="팀원1 프로필 사진" class="profile-pic">
+            <span class="role-label member">팀원</span>
+            <h2>팀원 장승열</h2>
+            <p class="hobby">"독서"</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:seungyeol520@dgu.ac.kr">seungyeol520@dgu.ac.kr</a></p>
+                <p><span class="icon">📞</span> 010-5484-7188</p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/SeungYeol21" target="_blank">@SeungYeol21</a></p>
+            </div>
+        </div>
+        
+        <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('na') }}', '_blank')">
+            <img src="{{ url_for('static', filename='naseoyun.jpg') }}" alt="팀원2 프로필 사진" class="profile-pic">
+            <span class="role-label member">팀원</span>
+            <h2>팀원 나서윤</h2>
+            <p class="hobby">"드라마 보기"</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:2022110458@dgu.ac.kr">2022110458@dgu.ac.kr</a></p>
+                <p><span class="icon">📞</span> 010-4905-5872</p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/naseoyun" target="_blank">@naseoyun</a></p>
+            </div>
+        </div>
+
+        <div class="card" style="cursor: pointer;" onclick="window.open('{{ url_for('son') }}', '_blank')">
+            <img src="{{ url_for('static', filename='son.jpg') }}" alt="팀원3 프로필 사진" class="profile-pic">
+            <span class="role-label member">팀원</span>
+            <h2>팀원 손석현</h2>
+            <p class="hobby">"영화 감상, 여행"</p>
+            <div class="contact-info">
+                <p><span class="icon">📧</span> <a href="mailto:2021111705@dgu.ac.kr">2021111705@dgu.ac.kr</a></p>
+                <p><span class="icon">📞</span> 010-1234-3459</p>
+                <p><span class="icon">🐱</span> <a href="https://github.com/seokhyun-Son" target="_blank">@seokhyun-Son</a></p>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="button-container">
+        <a href="/input" class="button-primary">팀원 추가하기</a>
+        <a href="#" class="button-primary" onclick="openEmergencyContact(); return false;">비상연락처</a>
+    </div>
+
+</body>
+</html>
