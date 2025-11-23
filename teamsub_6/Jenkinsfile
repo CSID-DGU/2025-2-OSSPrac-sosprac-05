@@ -6,14 +6,15 @@ pipeline {
     }
 
     environment {
-        DOCKER = credentials('dockerhub')
+        DOCKER = credentials('jihun3069')
     }
 
     stages {
+
         stage('Prepare') {
             steps {
-                git branch: 'main', 
-                    url: 'https://github.com/CSID-DGU/2025-2-OSSPrac-sosprac-05.git', 
+                git branch: 'main',
+                    url: 'https://github.com/CSID-DGU/2025-2-OSSPrac-sosprac-05.git',
                     credentialsId: 'github'
             }
         }
@@ -29,7 +30,7 @@ pipeline {
         stage('Tag') {
             steps {
                 script {
-                    sh "docker tag team_proj-image ${DOCKER_USR}/sosprac_web:${BUILD_NUMBER}"
+                    sh "docker tag sosprac_web ${DOCKER_USR}/sosprac_web:${BUILD_NUMBER}"
                 }
             }
         }
@@ -37,7 +38,7 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                    sh "docker login -u $DOCKER_USR -p $DOCKER_PSW"
+                    sh "echo $DOCKER_PSW | docker login -u $DOCKER_USR --password-stdin"
                     sh "docker push ${DOCKER_USR}/sosprac_web:${BUILD_NUMBER}"
                 }
             }
