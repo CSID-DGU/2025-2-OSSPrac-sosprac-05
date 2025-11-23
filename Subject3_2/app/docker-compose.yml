@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    image: jihun3069/app:latest
+    ports:
+      - "8000:80"

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팀 구성원 정보 출력</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        // 연락처 창 열기
+        function openContact(name, email, phone) {
+            const url = `/contact?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
+            window.open(url, "contactPage", "width=600,height=400");
+        }
+
+        // 입력 폼으로 돌아가는 함수
+        function goToEditForm() {
+            window.location.href = "/input"; 
+        }
+        // 정보 메시지 표시 함수
+        function showInfoMessage() {
+            const tooltip = document.querySelector('.tooltip');
+            tooltip.classList.add('show');
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</head>
+
+<body class="result-page">
+    <div class="info-icon" onclick="showInfoMessage()">ℹ️</div>
+    <div class="tooltip">카드 클릭시 연락처 정보 조회 가능</div>
+    
+    <h1>📚 {{ team_name }} 구성원 📚</h1>
+    
+    <div class="container" id="team-info">
+        {% for member in teamMembers %}
+        <div class="member-block" onclick="openContact('{{ member.name }}', '{{ member.email }}', '{{ member.phone }}')">
+            <span class="label">{{ 'Leader' if member.role == '팀장' else 'Member' }}</span>
+            <img src="{{ member.profilePicture }}" alt="Profile Picture" class="profile-img">
+            <div class="info">
+                <p><strong>이름:</strong> {{ member.name }}</p>
+                <p><strong>학과:</strong> {{ member.major }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="button-group">
+        <button class="action-button edit-button" onclick="goToEditForm()">다시 입력</button>
+        </div>
+</body>
+</html>
