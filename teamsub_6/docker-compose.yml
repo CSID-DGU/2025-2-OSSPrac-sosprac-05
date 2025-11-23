@@ -1,7 +1,7 @@
 services:
   python-app:
     build: .
-    image: sosprac_web   # ← 핵심: 수정 완료
+    image: jihun3069/sosprac_web 
     ports:
       - "8000:80"
     volumes:
