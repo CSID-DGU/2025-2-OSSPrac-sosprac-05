@@ -21,9 +21,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('teamsub_6') {
-                    sh 'docker compose build python-app'
-                }
+                sh 'docker compose build python-app'
             }
         }
 
